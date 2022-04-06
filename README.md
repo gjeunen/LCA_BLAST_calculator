@@ -37,4 +37,4 @@ LCA_BLAST_calculator includes two modules:
 1. `ncbi_taxdump`: download taxonomy information files from the NCBI website to be used for the LCA calculation
 2. `lca`: calculates the LCA for each sequence in the BLAST output
 
-### __1. ncbi_taxdump__
+### _1. ncbi_taxdump_
