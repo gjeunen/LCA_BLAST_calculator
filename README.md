@@ -1,5 +1,7 @@
 # LCA_BLAST_calculator
 
+## Introduction
+
 The LCA_BLAST_calculator program parses a BLAST output file and assigns a lowest common ancestor (LCA) to each submitted sequence using user-defined parameter thresholds for percent identity and query coverage. The LCA_BLAST_calculator program outputs the LCA taxonomic lineages in a tab-delimited document containing four columns, including (i) query sequence ID, (ii) taxonomic rank achieved, (iii) number of BLAST hits that passed the filter threshold and were used to calculate the LCA, and (iv) the taxonomic lineage of the LCA. If a frequency table (OTU table) is provided, the four columns can be inserted into the data table.
 
 ## Installing LCA_BLAST_calculator
@@ -19,11 +21,20 @@ cd LCA_BLAST_calculator
 To check if the installation was successful, type in the following command to pull up the help information for LCA_BLAST_calculator.
 
 ```sh
-./LCA_BLAST_calculator -h
+./LCA_BLAST_calculator.py -h
 ```
 
 Help information is also available for each of the modules included in LCA_BLAST_calculator and can be accessed by:
 
 ```sh
-./LCA_BLAST_calculator MODULE -h
+./LCA_BLAST_calculator.py MODULE -h
 ```
+
+## Running LCA_BLAST_calculator
+
+LCA_BLAST_calculator includes two modules:
+
+1. `ncbi_taxdump`: download taxonomy information files from the NCBI website to be used for the LCA calculation
+2. `lca`: calculates the LCA for each sequence in the BLAST output
+
+### __1. ncbi_taxdump__
