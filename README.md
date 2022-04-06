@@ -34,7 +34,13 @@ Help information is also available for each of the modules included in LCA_BLAST
 
 LCA_BLAST_calculator includes two modules:
 
-1. `ncbi_taxdump`: download taxonomy information files from the NCBI website to be used for the LCA calculation
+1. `ncbi_taxdump`: download taxonomy information files from the NCBI website
 2. `lca`: calculates the LCA for each sequence in the BLAST output
 
 ### _1. ncbi_taxdump_
+
+The LCA calculation of LCA_BLAST_calculator is based on the NCBI taxonomy, for which two files need to be downloaded, including `names.dmp` and `nodes.dmp`. If these files are already available on your system, this step can be omitted. Otherwise, the files can be downloaded using the code below. The `--source` or `-s` parameter allows you to specify which files are to be downloaded. This module makes use of the subprocess module to run `wget` to download the files from the NCBI website. Please make sure `wget` is correctly working on your OS. Once the taxonomy files are downloaded (~1 minute), the LCA can be calculated using the second module.
+
+```sh
+./LCA_BLAST_calculator.py ncbi_taxdump --source all
+```
