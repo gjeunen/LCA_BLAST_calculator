@@ -99,4 +99,12 @@ Users can also specify the name of a frequency or OTU table using the `--freq` p
 
 ## Example code
 
-Below is
+Example code is provided below, whereby the NCBI taxonomy files are first downloaded from the NCBI website and the LCA is calculated for a BLAST output file and incorporated into the frequency table using a percent identity and query coverage thresholds of 100%. Additional information for each parameter can be found in the sections above and by calling the help function within the terminal.
+
+```sh
+./LCA_BLAST_calculator.py ncbi_taxdump --source all
+```
+
+```sh
+./LCA_BLAST_calculator.py lca --input blast_results.txt --output frequency_table_LCA.txt --blast "qaccver+pident+qcovs+staxid" --freq frequency_table.txt --nodes nodes.dmp --names names.dmp --ranks "superkingdom+phylum+class+order+family+genus+species" --pident 100 --qcov 100
+```
