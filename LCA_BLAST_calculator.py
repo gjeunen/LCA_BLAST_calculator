@@ -8,7 +8,7 @@ import collections
 import os
 from tqdm import tqdm
 import subprocess as sp
-from functions.module_extract_blast_info import format_info, extract_blast, extract_nodes, extract_names, tax_lineage, calculate_lca, read_otutable, combine_data
+from functions.module_extract_blast_info import format_info, extract_blast, extract_nodes, extract_names, tax_lineage, calculate_lca, read_otutable, combine_data, export_lca
 
 ################################################
 ######### DOWNLOAD NCBI TAXONOMY INFO ##########
@@ -73,10 +73,14 @@ def lca(args):
     lineage = tax_lineage(taxid_set, RANKS, taxid_info, names_info)
     print(f'calculating the LCA based on taxonomic lineages for tax IDs that pass the query cover percentage threshold of {QCOV} and percent identity threshold of {PIDENT}')
     LCA_final = calculate_lca(LCA_dict, PIDENT, QCOV, RANKS, lineage)
-    print(f'reading in the frequency table {FREQ}')
-    otutable = read_otutable(FREQ)
-    print(f'combine LCA calculation with frequency table {FREQ}')
-    final = combine_data(otutable, LCA_final, OUTPUT)
+    if FREQ == None:
+        print(f'exporting LCA calculations to {OUTPUT}')
+        fin = export_lca(LCA_final, OUTPUT)
+    else:
+        print(f'reading in the frequency table {FREQ}')
+        otutable = read_otutable(FREQ)
+        print(f'combine LCA calculation with frequency table {FREQ}')
+        final = combine_data(otutable, LCA_final, OUTPUT)
 
 
 ################################################
@@ -95,7 +99,7 @@ def main():
     lca_parser.add_argument('-i', '--input', help = 'input file name', dest = 'input', type = str, required = True)
     lca_parser.add_argument('-o', '--output', help = 'output file name', dest = 'output', type = str, required = True)
     lca_parser.add_argument('-b', '--blast', help = 'format of BLAST results', dest = 'blast', type = str, required = True)
-    lca_parser.add_argument('-f', '--freq', help = 'frequency table file name', dest = 'freq', type = str, required = True)
+    lca_parser.add_argument('-f', '--freq', help = 'frequency table file name', dest = 'freq', type = str, required = False)
     lca_parser.add_argument('-t', '--nodes', help = 'filename of the "nodes.dmp" NCBI file', dest = 'nodes', type = str, default = 'nodes.dmp')
     lca_parser.add_argument('-n', '--names', help = 'filename of the "names.dmp" NCBI file', dest = 'names', type = str, default = 'names.dmp')
     lca_parser.add_argument('-r', '--ranks', help = 'taxonomic ranks to be included in the lineage', dest = 'ranks', type = str, default = 'superkingdom+phylum+class+order+family+genus+species')

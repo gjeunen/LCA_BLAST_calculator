@@ -156,4 +156,13 @@ def combine_data(otutable, LCA_final, OUTPUT):
     with open(OUTPUT, 'w') as outfile:
         for item in tqdm(LCA_total):
             outfile.write(item + '\t' + LCA_total[item].split('___')[1] + '\t' + LCA_total[item].split('___')[2]+ '\t' + LCA_total[item].split('___')[0] + '\t' + LCA_total[item].split('___')[3] + '\n')
-    
+
+def export_lca(LCA_final, output):
+    with open(output, 'w') as outfile:
+        count = 0
+        for item in tqdm(LCA_final):
+            if count == 0:
+                outfile.write('#qaccver' + '\t' + 'rank' + '\t' + 'blast_hit_number' + '\t' + 'taxonomic_lineage')
+                count = count + 1
+            else:
+                outfile.write(item + '\t' + LCA_final[item].split('___')[1] + '\t' + LCA_final[item].split('___')[2] + '\t' + LCA_final[item].split('___')[0] + '\n')
