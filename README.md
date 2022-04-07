@@ -49,10 +49,10 @@ The LCA calculation of LCA_BLAST_calculator is based on the NCBI taxonomy, for w
 
 #### 2.1 NCBI taxonomy information files
 
-The `lca` module needs access to the `names.dmp` and `nodes.dmp` NCBI taxonomy files to generate the taxonomic lineage and calculate the LCA. Both files can be downloaded using the `ncbi_taxdump` module (see _1. ncbi_taxdump_) and are specified with the `--names` and `--nodes` parameters, respectively. For example:
+The `lca` module needs access to the `names.dmp` and `nodes.dmp` NCBI taxonomy files to generate the taxonomic lineage and calculate the LCA. Both files can be downloaded using the `ncbi_taxdump` module (see _1. ncbi_taxdump_) and are specified with the `--names` and `--nodes` parameters, respectively. Default values are set to the original file names, but can be specified when files names are altered. For example:
 
 ```sh
-./LCA_BLAST_calculator lca --names names.dmp --nodes nodes.dmp
+./LCA_BLAST_calculator.py lca --names names.dmp --nodes nodes.dmp
 ```
 
 #### 2.2 BLAST output file and supported formats
@@ -76,5 +76,11 @@ blast_formatter -rid 4W8SHCD601R -out blast_results.txt -outfmt "6 qaccver piden
 Besides the specific format of the BLAST output file, information that needs to be incorporated in the BLAST output file includes: (i) query sequence ID (`qaccver`), (ii) percent identity (`pident`), (iii) query coverage (`qcovs`), and (iv) taxonomic ID of the BLAST hit (`staxid`). While other information can be included in the BLAST output, these are omitted in the LCA calculation. For LCA_BLAST_calculator to locate the necessary information in the BLAST output file, the format can be specified using the `--blast` or `-b` parameter. This parameter takes a string specifying the order of the fields separated by `+`. An example can be found below.
 
 ```sh
-./LCA_BLAST_calculator lca --blast "qaccver+pident+qcovs+staxid"
+./LCA_BLAST_calculator.py lca --blast "qaccver+pident+qcovs+staxid"
 ```
+
+#### 2.3 User-specified parameters
+
+The `lca` module will calculate the lowest common ancestor of the BLAST hits for each query sequence that passes the percent identity and query coverage thresholds specified by the user through the `--pident` and `--qcov` parameters. BLAST hits that achieve an equal or higher percent identity and query coverage will be included in the LCA calculation. Additionally, the taxonomic ranks to be included in the lineage that is created can be set using the `--ranks` parameter. By default, this is set to: `superkingdom+phylum+class+order+family+genus+species`.
+
+#### 2.4 Output
