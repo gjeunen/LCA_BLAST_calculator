@@ -89,5 +89,14 @@ LCA_BLAST_calculator will output a tsv file, whereby the output filename can be 
 
 1. `qaccver`: query sequence ID
 2. `rank`: achieved taxonomic rank for the LCA
-3. `blast_hit_number`: number of BLAST hits that passed the filter thresholds and were used to calculate the LCA
+3. `blast_hit_number`: number of BLAST hits passing the filter thresholds and used to calculate the LCA
 4. `taxonomic_lineage`: taxonomic lineage of the LCA, separated by semicolon
+
+Users can also specify the name of a frequency or OTU table using the `--freq` parameter. When specified, the LCA results will be automatically incorporated into the frequency table. A new frequency table will be created with three additional columns, including `rank`, `blast_hit_number`, `taxonomic_lineage`, with the output file name specified by the `--output` parameter. The three columns are inserted in between the query sequence ID column and the first sample column. The three columns for query sequence ID's that were not included in the BLAST output file will be filled out with `na`. In case BLAST hits were present in the BLAST output file, but none passed the filtering threshold, the three columns will be filled out with `NA`. For successful execution, the frequency table should have the following format:
+
+1. a tab-delimited file with the query sequence ID as the first column and samples in subsequent columns
+2. the header information should be available as the first line of the document and specified with a `#`
+
+## Example code
+
+Below is
