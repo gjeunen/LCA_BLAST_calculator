@@ -44,3 +44,30 @@ The LCA calculation of LCA_BLAST_calculator is based on the NCBI taxonomy, for w
 ```sh
 ./LCA_BLAST_calculator.py ncbi_taxdump --source all
 ```
+
+### _2. lca_
+
+The `lca` module needs access to the `names.dmp` and `nodes.dmp` NCBI taxonomy files to generate the taxonomic lineage and calculate the LCA. Both files can be downloaded using the `ncbi_taxdump` module (see _1. ncbi_taxdump_).
+
+Additionally, `lca` needs access to a BLAST output file, which can be specified using the `--input` or `-i` parameter. When running BLAST on the command line, the output format `blastn -outfmt "6"` should be specified. Other output formats are currently not supported in LCA_BLAST_calculator. When BLAST was performed on the NCBI website ("https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome"), the BLAST output file can be retrieved by using the `blast_formatter` program from the BLAST+ software. `blast_formatter` is not incorporated into LCA_BLAST_calculator and will need to be downloaded from the following website ("https://ftp.ncbi.nlm.nih.gov/blast/executables/LATEST/"). The BLAST output file can then be downloaded using the Request ID (RID) number. An example code can be found below, as well as a screenshot of where you can find the RID number on the BLAST website.
+
+```sh
+blast_formatter -rid 4W8SHCD601R -out blast_results.txt -outfmt "6 qaccver pident qcovs staxid"
+```
+
+![Figure 1: RID location](figure_1_rid_location.png)
+
+Additionally, the following fields need to be present in the output file:
+
+1. `qaccver`: sequence ID
+2. `pident`: percent identity
+3. `qcovs`: query coverage
+4. `staxid`: taxonomic ID for the BLAST match
+
+An example code to run blast via the command line with correct output format and required fields can be found below (file names need to be altered accordingly).
+
+```sh
+blastn -query otus.fasta -task megablast -db database.fasta -out blast_otus.txt -outfmt "6 qaccver pident qcovs staxid"
+```
+
+While other fields can be included in the BLAST output, these are omitted in the LCA calculation. For LCA_BLAST_calculator to locate the necessary information in the BLAST output file, the format can be specified using the `--blast` or `-b` parameter
