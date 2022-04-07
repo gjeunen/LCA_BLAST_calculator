@@ -84,3 +84,10 @@ Besides the specific format of the BLAST output file, information that needs to 
 The `lca` module will calculate the lowest common ancestor of the BLAST hits for each query sequence that passes the percent identity and query coverage thresholds specified by the user through the `--pident` and `--qcov` parameters. BLAST hits that achieve an equal or higher percent identity and query coverage will be included in the LCA calculation. Additionally, the taxonomic ranks to be included in the lineage that is created can be set using the `--ranks` parameter. By default, this is set to: `superkingdom+phylum+class+order+family+genus+species`.
 
 #### 2.4 Output
+
+LCA_BLAST_calculator will output a tsv file, whereby the output filename can be specified with the `--output` parameter. All information is contained on a single line for each sequence with the following columns:
+
+1. `qaccver`: query sequence ID
+2. `rank`: achieved taxonomic rank for the LCA
+3. `blast_hit_number`: number of BLAST hits that passed the filter thresholds and were used to calculate the LCA
+4. `taxonomic_lineage`: taxonomic lineage of the LCA, separated by semicolon
