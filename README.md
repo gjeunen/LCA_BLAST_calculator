@@ -49,7 +49,11 @@ The LCA calculation of LCA_BLAST_calculator is based on the NCBI taxonomy, for w
 
 #### 2.1 NCBI taxonomy information files
 
-The `lca` module needs access to the `names.dmp` and `nodes.dmp` NCBI taxonomy files to generate the taxonomic lineage and calculate the LCA. Both files can be downloaded using the `ncbi_taxdump` module (see _1. ncbi_taxdump_).
+The `lca` module needs access to the `names.dmp` and `nodes.dmp` NCBI taxonomy files to generate the taxonomic lineage and calculate the LCA. Both files can be downloaded using the `ncbi_taxdump` module (see _1. ncbi_taxdump_) and are specified with the `--names` and `--nodes` parameters, respectively. For example:
+
+```sh
+./LCA_BLAST_calculator lca --names names.dmp --nodes nodes.dmp
+```
 
 #### 2.2 BLAST output file and supported formats
 
@@ -69,9 +73,8 @@ blast_formatter -rid 4W8SHCD601R -out blast_results.txt -outfmt "6 qaccver piden
 
 ![Figure 1: RID location](figure_1_rid_location.png)
 
-Besides the specific output format for the BLAST output file, the fields specified below need to be included. While other fields can be included in the BLAST output, these are omitted in the LCA calculation. For LCA_BLAST_calculator to locate the necessary information in the BLAST output file, the format can be specified using the `--blast` or `-b` parameter.
+Besides the specific format of the BLAST output file, information that needs to be incorporated in the BLAST output file includes: (i) query sequence ID (`qaccver`), (ii) percent identity (`pident`), (iii) query coverage (`qcovs`), and (iv) taxonomic ID of the BLAST hit (`staxid`). While other information can be included in the BLAST output, these are omitted in the LCA calculation. For LCA_BLAST_calculator to locate the necessary information in the BLAST output file, the format can be specified using the `--blast` or `-b` parameter. This parameter takes a string specifying the order of the fields separated by `+`. An example can be found below.
 
-1. `qaccver`: sequence ID
-2. `pident`: percent identity
-3. `qcovs`: query coverage
-4. `staxid`: taxonomic ID for the BLAST match
+```sh
+./LCA_BLAST_calculator lca --blast "qaccver+pident+qcovs+staxid"
+```
